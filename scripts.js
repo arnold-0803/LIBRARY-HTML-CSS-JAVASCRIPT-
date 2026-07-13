@@ -5,6 +5,7 @@ function Book(title, author, pages, read, id) {
   this.author = author;
   this.pages = pages;
   this.read = read;
+  this.id = crypto.randomUUID();
 
   this.info = function(){
     return `${this.title} by ${this.author}, pages ${this.pages}. ${this.read ? "Yes read" : "Not read yet"}`
@@ -13,53 +14,71 @@ function Book(title, author, pages, read, id) {
 
 function addBookToLibrary(title, author, pages, read, id) {
   const newBook = new Book(title, author, pages, read, id);
-  
+
   myLibrary.push(newBook);
 }
 
-addBookToLibrary("Hobbit", "A.K.Doe", "600", "Yes");
-
 console.log(myLibrary);
 
-const table = document.querySelector("table");
-const row = document.querySelector(".table-row");
+const tableBody = document.querySelector("tBody");
 
 
 function displayBooks(){
+  tableBody.textContent = "";
+  
   myLibrary.forEach(book => {
-    const bookProperties = [book.title, book.author, book.pages, book.read];
+    const bookProperties = [book.title, book.author, book.pages, book.read ? "Yes" : "No"];
+    const row = document.createElement("tr");
+    const removeBtn = document.createElement("button");
+    const removeCell = document.createElement("td");
 
     bookProperties.forEach(text => {
       const cell = document.createElement("td");
 
+      removeBtn.textContent = "Remove Book";
+      removeBtn.setAttribute("type", "submit");
+      removeBtn.setAttribute("id", "remove");
+
       cell.textContent = text;
-      row.append(cell);
+      removeCell.append(removeBtn);
+      row.append(cell, removeCell);
     });
 
-    table.append(row);
+    tableBody.append(row);
   });
 }
 
-displayBooks();
 
-// const tableBody = document.querySelector(".table-body");
 
-// const displayBooks = () => {
-//   tableBody.innerHTML = "";
 
-//   myLibrary.forEach(book => {
-//     const row = document.createElement("tr");
+const toggleBtnOpen = () => {
+  const form = document.querySelector("form");
 
-//     const bookPropertie = [book.title, book.author, book.pages, book.read];
+  document.getElementById("show-btn").addEventListener("click", () => {
+    if(form.style.display === "none" || form.style.display === ""){
+      form.style.display = "block";
+    }else{
+      form.style.display = "none";
+    }
+  });
+}
 
-//     bookPropertie.forEach(text => {
-//       const cell = document.createElement("td");
-//       cell.textContent = text;
-//       row.append(cell);
-//     });
+toggleBtnOpen();
 
-//     tableBody.append(row);
-//   });
-// }
+const formSubmit = () => {
+  document.querySelector("form").addEventListener("submit", (e) => {
+    e.preventDefault();
 
-// displayBooks();
+    const title = document.querySelector("#title").value;
+    const author = document.querySelector("#author").value;
+    const pages = document.querySelector("#pages").value;
+    const read = document.querySelector("#read").value;
+
+    let trueOrFalse = (read.toLowerCase() === "true");
+
+    addBookToLibrary(title, author, pages, trueOrFalse);
+    displayBooks();
+  });
+}
+
+formSubmit();

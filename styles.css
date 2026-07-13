@@ -20,3 +20,52 @@ table tr td{
   border: 2px solid #000;
   padding: 20px;
 }
+
+table tr button{
+  background: rgb(251, 68, 68);
+  margin: 15px 0 0 8px;
+  padding: 8px;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.form-area{
+  display: flex;
+  flex-direction: column;
+  padding: 40px 0;
+  width: 460px;
+  gap: 10px;
+}
+
+.form-area button{
+  align-self: flex-end;
+  padding: 8px 16px;
+  font-weight: 600;
+  background-color: #6c6cf3;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+}
+
+.form-area form{
+  display: none;
+  border: 1.5px solid #000;
+  padding: 15px;
+}
+
+.form-area form div{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.form-area form h1{
+  text-align: center;
+}
+
+form div input{
+  padding: 8px;
+}
+
