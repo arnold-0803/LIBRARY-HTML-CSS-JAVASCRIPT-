@@ -65,6 +65,19 @@ table tr button{
   text-align: center;
 }
 
+form div:nth-child(5){
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 25px 8px;
+  input{
+    width: 18px;
+    height: 18px;
+    accent-color: #6c6cf3;
+  }
+}
+
 form div input{
   padding: 8px;
 }

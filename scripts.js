@@ -1,5 +1,6 @@
 const myLibrary = [];
 
+
 function Book(title, author, pages, read, id) {
   this.title = title;
   this.author = author;
@@ -12,6 +13,7 @@ function Book(title, author, pages, read, id) {
   };
 }
 
+
 function addBookToLibrary(title, author, pages, read, id) {
   const newBook = new Book(title, author, pages, read, id);
 
@@ -20,7 +22,7 @@ function addBookToLibrary(title, author, pages, read, id) {
 
 console.log(myLibrary);
 
-const tableBody = document.querySelector("tBody");
+const tableBody = document.querySelector("tbody");
 
 
 function displayBooks(){
@@ -29,26 +31,35 @@ function displayBooks(){
   myLibrary.forEach(book => {
     const bookProperties = [book.title, book.author, book.pages, book.read ? "Yes" : "No"];
     const row = document.createElement("tr");
-    const removeBtn = document.createElement("button");
-    const removeCell = document.createElement("td");
 
     bookProperties.forEach(text => {
       const cell = document.createElement("td");
 
-      removeBtn.textContent = "Remove Book";
-      removeBtn.setAttribute("type", "submit");
-      removeBtn.setAttribute("id", "remove");
-
       cell.textContent = text;
-      removeCell.append(removeBtn);
-      row.append(cell, removeCell);
+      row.append(cell);
     });
 
+    const removeBtn = document.createElement("button");
+    const removeCell = document.createElement("td");
+
+    removeBtn.textContent = "Remove Book";
+    removeBtn.setAttribute("type", "button");
+    removeBtn.setAttribute("id", "remove");
+
+    removeBtn.addEventListener("click", () => {
+      const bookId = myLibrary.findIndex(b => b.id === book.id);
+      
+      if(bookId > -1){
+        myLibrary.splice(bookId, 1);
+      }
+      displayBooks();
+    });
+
+    removeCell.append(removeBtn);
+    row.append(removeCell);
     tableBody.append(row);
   });
 }
-
-
 
 
 const toggleBtnOpen = () => {
@@ -72,11 +83,9 @@ const formSubmit = () => {
     const title = document.querySelector("#title").value;
     const author = document.querySelector("#author").value;
     const pages = document.querySelector("#pages").value;
-    const read = document.querySelector("#read").value;
+    const read = document.querySelector("#read").checked;
 
-    let trueOrFalse = (read.toLowerCase() === "true");
-
-    addBookToLibrary(title, author, pages, trueOrFalse);
+    addBookToLibrary(title, author, pages, read);
     displayBooks();
   });
 }
