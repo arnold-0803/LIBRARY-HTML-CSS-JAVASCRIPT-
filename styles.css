@@ -23,12 +23,16 @@ table tr td{
 
 table tr button{
   background: rgb(251, 68, 68);
-  margin: 15px 0 0 8px;
+  margin: 15px 0 0 2px;
   padding: 8px;
   border: none;
   border-radius: 3px;
   color: #fff;
   font-weight: 600;
+}
+
+table tr #status{
+  background-color: rgb(27, 112, 27);
 }
 
 .form-area{
@@ -81,4 +85,3 @@ form div:nth-child(5){
 form div input{
   padding: 8px;
 }
-

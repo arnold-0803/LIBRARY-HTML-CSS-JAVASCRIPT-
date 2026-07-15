@@ -1,21 +1,21 @@
 const myLibrary = [];
 
 
-function Book(title, author, pages, read, id) {
+function Book(title, author, pages, read) {
   this.title = title;
   this.author = author;
   this.pages = pages;
   this.read = read;
-  this.id = crypto.randomUUID();
-
-  this.info = function(){
-    return `${this.title} by ${this.author}, pages ${this.pages}. ${this.read ? "Yes read" : "Not read yet"}`
-  };
 }
 
 
-function addBookToLibrary(title, author, pages, read, id) {
-  const newBook = new Book(title, author, pages, read, id);
+Book.prototype.toggleRead = function () {
+  this.read = !this.read;
+}
+
+
+function addBookToLibrary(title, author, pages, read) {
+  const newBook = new Book(title, author, pages, read);
 
   myLibrary.push(newBook);
 }
@@ -55,7 +55,22 @@ function displayBooks(){
       displayBooks();
     });
 
+    const statusBtn = document.createElement("button");
+    const statusBtnCell = document.createElement("td");
+
+    statusBtn.textContent = "Status";
+    statusBtn.setAttribute("type", "button");
+    statusBtn.setAttribute("id", "status");
+
+    statusBtn.addEventListener("click", () => {
+      book.toggleRead();
+
+      displayBooks()
+    });
+
     removeCell.append(removeBtn);
+    statusBtnCell.append(statusBtn);
+    row.append(statusBtnCell);
     row.append(removeCell);
     tableBody.append(row);
   });
@@ -87,6 +102,10 @@ const formSubmit = () => {
 
     addBookToLibrary(title, author, pages, read);
     displayBooks();
+
+    e.target.reset();
+
+    document.querySelector("form").style.display = "none";
   });
 }
 
